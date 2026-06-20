@@ -1,0 +1,221 @@
+/* ============================================================
+   Motonia — landing page
+   Clean, professional. Black background, ready for video.
+   ============================================================ */
+
+/* Self-hosted fonts (variable; no external requests) */
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("assets/fonts/sora.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("assets/fonts/inter.woff2") format("woff2");
+}
+
+:root {
+  --bg:        #000000;
+  --ink:       #FFFFFF;
+  --muted:     #A7B0B5;
+  --muted-dim: #6E777C;
+  --teal:      #21A7D2;
+  --green:     #6FC04D;
+  --card:      rgba(255,255,255,0.05);
+  --card-brd:  rgba(255,255,255,0.16);
+  --card-hov:  rgba(255,255,255,0.10);
+  --font-display: "Sora", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px; top: 0;
+  background: var(--green);
+  color: #04130a;
+  padding: 10px 16px;
+  border-radius: 0 0 10px 0;
+  z-index: 50;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+/* ===================== HERO ===================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* background layer (black now; video-ready) */
+.bg { position: absolute; inset: 0; z-index: -1; background: #000; }
+.bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+/* subtle depth on black + darkening for legibility once a video is added */
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 55% at 50% 32%, rgba(33,167,210,0.12), rgba(0,0,0,0) 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.6) 100%);
+}
+
+/* ===================== CONTENT ===================== */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 720px;
+  margin: 0 auto;
+  animation: rise 0.8s cubic-bezier(.2,.7,.2,1) both;
+}
+
+.logo {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 26px;
+  filter: drop-shadow(0 10px 36px rgba(33,167,210,0.35));
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  letter-spacing: 0.18em;
+  margin: 0 0 12px;
+  line-height: 1;
+  /* nudge to optically center the letter-spacing */
+  padding-left: 0.18em;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1rem, 2.6vw, 1.35rem);
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  margin: 0 0 22px;
+}
+
+.subtag {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+/* ===================== STORE BUTTONS ===================== */
+.store-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 24px 13px 20px;
+  min-width: 215px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--card-brd);
+  transition: transform .22s cubic-bezier(.2,.7,.2,1), border-color .22s, background .22s;
+}
+.store-btn:hover,
+.store-btn:focus-visible {
+  transform: translateY(-3px);
+  background: var(--card-hov);
+  border-color: rgba(255,255,255,0.34);
+  outline: none;
+}
+.store-btn:focus-visible { box-shadow: 0 0 0 3px rgba(33,167,210,0.45); }
+.store-btn svg { flex: none; }
+.store-btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.12;
+}
+.store-btn-text small {
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.store-btn-text strong {
+  font-family: var(--font-display);
+  font-size: 1.16rem;
+  font-weight: 700;
+}
+
+.microcopy {
+  font-size: 0.85rem;
+  color: var(--muted-dim);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 22px 20px 30px;
+  color: var(--muted-dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+/* ===================== ANIMATIONS ===================== */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 560px) {
+  .logo { width: 112px; height: 112px; }
+  .store-btn { min-width: 0; flex: 1 1 100%; justify-content: center; }
+  .hero-content { padding: 40px 20px; }
+}
+
+/* ===================== ACCESSIBILITY ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
