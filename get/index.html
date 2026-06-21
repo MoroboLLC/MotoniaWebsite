@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Get Motonia</title>
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="/assets/favicon.png" type="image/png" />
+  <style>
+    @font-face{font-family:"Sora";font-weight:400 800;font-display:swap;src:url("/assets/fonts/sora.woff2") format("woff2");}
+    @font-face{font-family:"Inter";font-weight:400 600;font-display:swap;src:url("/assets/fonts/inter.woff2") format("woff2");}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:#000;color:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    .wrap{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 22px;gap:20px}
+    .logo{width:96px;height:96px;filter:drop-shadow(0 10px 30px rgba(33,167,210,.35))}
+    h1{font-family:"Sora",sans-serif;font-weight:800;letter-spacing:.14em;font-size:1.5rem;margin:4px 0 0}
+    p{color:#A7B0B5;margin:0;font-size:1rem}
+    .spinner{width:30px;height:30px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:#21A7D2;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .choices{display:none;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+    .choices.show{display:flex}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:13px;text-decoration:none;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);font-family:"Sora",sans-serif;font-weight:700;font-size:1rem}
+    .btn:hover{background:rgba(255,255,255,.12)}
+    @media (prefers-reduced-motion:reduce){.spinner{animation:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="logo" src="/assets/motonia-logo.png" alt="Motonia" width="96" height="96" />
+    <div class="spinner" id="spinner" aria-hidden="true"></div>
+    <h1>MOTONIA</h1>
+    <p id="msg">Opening your app store…</p>
+
+    <div class="choices" id="choices" aria-label="Choose your store">
+      <a class="btn" id="ios" href="https://apps.apple.com/us/app/motonia/id6760694800" rel="noopener">App Store</a>
+      <a class="btn" id="android" href="https://play.google.com/store/apps/details?id=com.motonia.android" rel="noopener">Google Play</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var APP_STORE = "https://apps.apple.com/us/app/motonia/id6760694800";
+      var PLAY      = "https://play.google.com/store/apps/details?id=com.motonia.android";
+
+      var ua = navigator.userAgent || navigator.vendor || "";
+      var isAndroid = /android/i.test(ua);
+      // iPhone/iPod/iPad — plus iPadOS, which reports as "Macintosh" but has touch
+      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+                  (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+
+      var dest = isIOS ? APP_STORE : isAndroid ? PLAY : null;
+
+      if (dest) {
+        // go straight to the right store
+        window.location.replace(dest);
+        // safety net: if the redirect is blocked, reveal manual choices
+        setTimeout(showChoices, 1500);
+      } else {
+        // desktop / unknown — let them choose (or send to the site)
+        document.getElementById("msg").textContent = "Get Motonia on your phone:";
+        showChoices();
+      }
+
+      function showChoices() {
+        var s = document.getElementById("spinner");
+        if (s) s.style.display = "none";
+        document.getElementById("choices").classList.add("show");
+        if (dest) document.getElementById("msg").textContent = "Tap to continue to your store:";
+      }
+    })();
+  </script>
+</body>
+</html>
