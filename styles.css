@@ -61,7 +61,8 @@ html, body {
 /* ===================== HERO ===================== */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 100vh;       /* fallback */
+  min-height: 100dvh;      /* fills the screen even as the mobile bar hides */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,11 +98,27 @@ html, body {
   animation: rise 0.8s cubic-bezier(.2,.7,.2,1) both;
 }
 
+/* circular glow via pseudo-element (NOT filter:drop-shadow — that paints a
+   rectangular box over <video> on iOS Safari). */
+.logo-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  margin-bottom: 26px;
+}
+.logo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(33,167,210,0.45) 0%, rgba(33,167,210,0) 68%);
+  z-index: -1;
+  pointer-events: none;
+}
 .logo {
   width: 140px;
   height: 140px;
-  margin-bottom: 26px;
-  filter: drop-shadow(0 10px 36px rgba(33,167,210,0.35));
+  display: block;
 }
 
 .wordmark {
@@ -206,9 +223,21 @@ html, body {
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 560px) {
-  .logo { width: 112px; height: 112px; }
+  .logo { width: 108px; height: 108px; }
+  .logo-wrap { margin-bottom: 18px; }
   .store-btn { min-width: 0; flex: 1 1 100%; justify-content: center; }
-  .hero-content { padding: 40px 20px; }
+  .hero-content { padding: 34px 20px; }
+  .tagline { margin-bottom: 16px; }
+  .subtag { margin-bottom: 26px; }
+
+  /* stronger darkening so the zoomed-in footage stays readable behind text */
+  .bg-overlay {
+    background:
+      radial-gradient(86% 50% at 50% 42%, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.34) 55%, rgba(0,0,0,0.12) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 38%, rgba(0,0,0,0.68) 100%);
+  }
+  /* favor the bike body over the empty floor in the portrait crop */
+  .bg-video { object-position: 50% 42%; }
 }
 
 /* ===================== ACCESSIBILITY ===================== */
