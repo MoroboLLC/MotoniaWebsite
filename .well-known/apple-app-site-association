@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["92RVQNVG5F.com.morobo.motoniaIOS"],
+        "components": [
+          { "/": "/join", "?": { "ref": "?*" }, "comment": "referral" },
+          { "/": "/join*", "comment": "referral variants" },
+          { "/": "/ride", "?": { "code": "?*" }, "comment": "group ride join" },
+          { "/": "/ride*", "comment": "group ride variants" }
+        ]
+      }
+    ]
+  }
+}
