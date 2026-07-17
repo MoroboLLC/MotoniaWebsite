@@ -40,8 +40,17 @@
 
   <script>
     (function () {
+      // This page handles the AFFILIATE link: /get?aff=<slug>
+      // On Android (not installed) it forwards to Play WITH an install referrer
+      // (aff=<slug>) so attribution survives a cold install.
+      var QUERY_PARAM  = "aff";   // query param on this page
+      var REFERRER_KEY = "aff";   // key inside the Play referrer
+
       var APP_STORE = "https://apps.apple.com/us/app/motonia/id6760694800";
-      var PLAY      = "https://play.google.com/store/apps/details?id=com.motonia.android";
+      var PLAY_BASE = "https://play.google.com/store/apps/details?id=com.motonia.android";
+
+      var val = new URLSearchParams(window.location.search).get(QUERY_PARAM);
+      var PLAY = PLAY_BASE + (val ? "&referrer=" + encodeURIComponent(REFERRER_KEY + "=" + val) : "");
 
       var ua = navigator.userAgent || navigator.vendor || "";
       var isAndroid = /android/i.test(ua);
@@ -49,15 +58,16 @@
       var isIOS = /iPad|iPhone|iPod/.test(ua) ||
                   (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
 
+      // keep the manual buttons in sync (Play button carries the referrer)
+      var iosBtn = document.getElementById("ios");     if (iosBtn) iosBtn.href = APP_STORE;
+      var andBtn = document.getElementById("android"); if (andBtn) andBtn.href = PLAY;
+
       var dest = isIOS ? APP_STORE : isAndroid ? PLAY : null;
 
       if (dest) {
-        // go straight to the right store
         window.location.replace(dest);
-        // safety net: if the redirect is blocked, reveal manual choices
-        setTimeout(showChoices, 1500);
+        setTimeout(showChoices, 1500); // safety net if the redirect is blocked
       } else {
-        // desktop / unknown — let them choose (or send to the site)
         document.getElementById("msg").textContent = "Get Motonia on your phone:";
         showChoices();
       }

@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.motonia.android",
+      "sha256_cert_fingerprints": [
+        "72:B0:FC:EC:4B:3A:6C:09:71:DF:EE:6C:47:A4:96:AB:F3:0D:1F:41:D2:CC:0F:D1:44:73:BC:12:B3:6D:06:7B"
+      ]
+    }
+  }
+]
